@@ -4,8 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItemList } from '@react-navigation/drawer';
 import { Icon } from 'react-native-elements';
-
-
+import Favorites from './FavoriteComponent';
 import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
@@ -193,7 +192,7 @@ const ReservationNavigator = createStackNavigator();
 function ReservationNavigatorScreen(){
     return(
         <ReservationNavigator.Navigator
-            initialRouteName='About Us'
+            initialRouteName='Reservation'
             screenOptions={HeaderOptions}
         >
             <ReservationNavigator.Screen
@@ -207,6 +206,29 @@ function ReservationNavigatorScreen(){
                  }
             />
         </ReservationNavigator.Navigator>
+
+    )
+}
+
+const FavoritesNavigator = createStackNavigator();
+
+function FavoritesNavigatorScreen(){
+    return(
+        <FavoritesNavigator.Navigator
+            initialRouteName='My Favorites'
+            screenOptions={HeaderOptions}
+        >
+            <ReservationNavigator.Screen
+                name="My Favorites"
+                component={Favorites}
+                options={
+                    ({navigation}) => ({
+                        headerLeft: () => 
+                            <MenuIcon navigation={navigation}/>
+                    })
+                 }
+            />
+        </FavoritesNavigator.Navigator>
 
     )
 }
@@ -281,6 +303,22 @@ function MainNavigatorDrawer() {
             />
         
         <MainNavigator.Screen 
+                name="My Favorites"   
+                component={FavoritesNavigatorScreen} 
+                options={{
+                    drawerIcon: ({tintColor}) => (
+                        <Icon
+                            name='heart'
+                            type='font-awesome'
+                            size={24}
+                            color={tintColor}
+                        />
+                    )
+                }}                
+            />
+        
+
+        <MainNavigator.Screen 
                 name="Reservation"   
                 component={ReservationNavigatorScreen} 
                 options={{
@@ -295,6 +333,7 @@ function MainNavigatorDrawer() {
                 }}                
             />
         </MainNavigator.Navigator>
+        
     );
 }
 
